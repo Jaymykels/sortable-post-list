@@ -14,22 +14,7 @@
               List of actions commited
             </div>
             <div class="m-3 sm:m-6">
-              <div class="bg-white h-20 rounded p-3 shadow border flex justify-between">
-                <div class="sm:my-3 my-1 sm:text-base text-sm">
-                  Moved post 1 from index 2 to index 1
-                </div>
-                <button class="h-12 m-1 bg-green-300 rounded text-sm shadow sm:text-base w-32 hover:text-white">
-                  Time travel
-                </button>
-              </div>
-              <div class="bg-white h-20 rounded p-3 shadow border flex justify-between">
-                <div class="sm:my-3 my-1 sm:text-base text-sm">
-                  Moved post 3 from index 4 to index 3
-                </div>
-                <button class="h-12 m-1 bg-green-300 rounded text-sm shadow sm:text-base w-32 hover:text-white">
-                  Time travel
-                </button>
-              </div>
+              <Action v-for="(action, index) in actions" :action="action" :timeTravel="timeTravel" :key="index"/>
             </div>
           </div>
         </div>
@@ -40,19 +25,30 @@
 
 <script>
 import Post from './components/Post'
+import Action from './components/Action'
 export default {
   name: 'app',
   components: {
-    Post
+    Post,
+    Action
   },
   data() {
     return {
-      posts: Array.from({ length: 5 }, (value, key) => `Post ${key}`)
+      posts: Array.from({ length: 5 }, (value, key) => `Post ${key}`),
+      actions: []
     }
   },
   methods: {
     move(direction, index) {
       console.log(direction, index)
+      this.actions.push({
+        direction,
+        index,
+        post : this.posts[index]
+      })
+    },
+    timeTravel(action) {
+      console.log(action)
     },
     getDirections(index) {
       let directions = []
