@@ -1,10 +1,11 @@
 import { mount } from '@vue/test-utils'
 import Post from './Post.vue'
+import { direction } from '../utils'
 
 describe('Post.vue', () => {
     const move = jest.fn()
     const propsData = {
-        directions: ['UP', 'DOWN'],
+        directions: [direction.UP, direction.DOWN],
         text: 'Hello World!',
         index: 4,
         move 
@@ -29,7 +30,7 @@ describe('Post.vue', () => {
         const wrapper = mount(Post, {
             propsData : {
                 ...propsData,
-                directions: ['UP']
+                directions: [direction.UP]
             }
         })
         expect(wrapper.find('#up').exists()).toBe(true)
@@ -40,7 +41,7 @@ describe('Post.vue', () => {
         const wrapper = mount(Post, {
             propsData : {
                 ...propsData,
-                directions: ['DOWN']
+                directions: [direction.DOWN]
             }
         })
         expect(wrapper.find('#up').exists()).toBe(false)
@@ -51,10 +52,10 @@ describe('Post.vue', () => {
         const wrapper = mount(Post, {
             propsData : {
                 ...propsData,
-                directions: ['UP']
+                directions: [direction.UP]
             }
         })
         wrapper.find('svg').trigger('click')
-        expect(move).toHaveBeenCalledWith('UP', 4)
+        expect(move).toHaveBeenCalledWith(direction.UP, 4)
     })
 });

@@ -1,10 +1,11 @@
 import { mount } from '@vue/test-utils'
 import Action from './Action.vue'
+import {direction} from '../utils'
 
 describe('Action.vue', () => {
     const timeTravel = jest.fn()
     const propsData = {
-        action : {direction: 'UP', index: 2, post: 'Post 1'},
+        action : {direction: direction.UP, index: 2, post: 'Post 1'},
         timeTravel
     }
 

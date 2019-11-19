@@ -10,6 +10,7 @@
 </template>
 
 <script>
+    import {direction} from '../utils'
     export default {
         props: {
             action: Object,
@@ -17,7 +18,7 @@
         },
         computed: {
             message() {
-                return `Moved ${this.action.post} from index ${this.action.index} to index ${this.action.direction === 'UP' ? this.action.index - 1 : this.action.index + 1}`
+                return `Moved ${this.action.post} from index ${this.action.index} to index ${this.action.direction === direction.UP ? this.action.index - 1 : this.action.index + 1}`
             }
         }
     }
