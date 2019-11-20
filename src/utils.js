@@ -1,1 +1,1 @@
-export const direction = {UP: 'UP', DOWN: 'DOWN'}
+export const direction = { UP: 'UP', DOWN: 'DOWN' }

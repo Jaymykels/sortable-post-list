@@ -1,4 +1,4 @@
-import { mount } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import Post from './Post.vue'
 import { direction } from '../utils'
 
@@ -8,18 +8,18 @@ describe('Post.vue', () => {
         directions: [direction.UP, direction.DOWN],
         text: 'Hello World!',
         index: 4,
-        move 
+        move
     }
 
     test('contains the post passed to it', () => {
-        const wrapper = mount(Post, {
+        const wrapper = shallowMount(Post, {
             propsData
         })
         expect(wrapper.text()).toContain(propsData.text)
     });
 
     test('displays up and down buttons', () => {
-        const wrapper = mount(Post, {
+        const wrapper = shallowMount(Post, {
             propsData
         })
         expect(wrapper.find('#up').exists()).toBe(true)
@@ -27,8 +27,8 @@ describe('Post.vue', () => {
     });
 
     test('displays up button only', () => {
-        const wrapper = mount(Post, {
-            propsData : {
+        const wrapper = shallowMount(Post, {
+            propsData: {
                 ...propsData,
                 directions: [direction.UP]
             }
@@ -38,8 +38,8 @@ describe('Post.vue', () => {
     });
 
     test('displays down button only', () => {
-        const wrapper = mount(Post, {
-            propsData : {
+        const wrapper = shallowMount(Post, {
+            propsData: {
                 ...propsData,
                 directions: [direction.DOWN]
             }
@@ -49,8 +49,8 @@ describe('Post.vue', () => {
     });
 
     test('calls the move function with the right parameters', () => {
-        const wrapper = mount(Post, {
-            propsData : {
+        const wrapper = shallowMount(Post, {
+            propsData: {
                 ...propsData,
                 directions: [direction.UP]
             }

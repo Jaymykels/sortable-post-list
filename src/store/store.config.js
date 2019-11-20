@@ -11,26 +11,26 @@ const sortDescending = arr => arr.sort((a, b) => a.id > b.id ? -1 : (a.id < b.id
 export default function storeConfig() {
     return {
         state: {
-            posts: [],
+            posts: [...Array.from({ length: 5 }, (_, key) => `Post ${key+1}`)],
             actions: []
         },
         mutations: {
-            [mutationTypes.UP] (state, index) {
+            [mutationTypes.UP](state, index) {
                 var temp = state.posts[index]
-                state.posts[index] = state.posts[index-1]
-                state.posts[index-1] = temp
+                state.posts[index] = state.posts[index - 1]
+                state.posts[index - 1] = temp
             },
-            [mutationTypes.DOWN] (state, index) {
+            [mutationTypes.DOWN](state, index) {
                 var temp = state.posts[index]
-                state.posts[index] = state.posts[index+1]
-                state.posts[index+1] = temp
+                state.posts[index] = state.posts[index + 1]
+                state.posts[index + 1] = temp
             },
-            [mutationTypes.ADD_ACTION] (state, payload) {
+            [mutationTypes.ADD_ACTION](state, payload) {
                 var actions = [...state.actions]
-                actions.push({...payload, id: state.actions.length})
+                actions.push({ ...payload, id: state.actions.length })
                 state.actions = sortDescending(actions)
             },
-            [mutationTypes.REMOVE_ACTION] (state) {
+            [mutationTypes.REMOVE_ACTION](state) {
                 var actions = [...state.actions]
                 actions.shift()
                 state.actions = sortDescending(actions)
@@ -38,12 +38,12 @@ export default function storeConfig() {
         },
         actions: {
             //move post 
-            move({commit}, payload) {
+            move({ commit }, payload) {
                 commit(mutationTypes.ADD_ACTION, payload)
                 commit(payload.direction, payload.index)
             },
             //undo an action
-            timeTravel({commit}, payload) {
+            timeTravel({ commit }, payload) {
                 commit(mutationTypes.REMOVE_ACTION)
                 commit(payload.direction, payload.index)
             }
