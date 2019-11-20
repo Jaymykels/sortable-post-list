@@ -4,12 +4,13 @@
     <button
       @click="timeTravel(action)"
       class="h-12 m-1 bg-green-300 rounded text-sm shadow sm:text-base w-1/5 hover:text-white text-gray-700"
+      :id="`button-${action.id}`"
     >Time travel</button>
   </div>
 </template>
 
 <script>
-import { direction } from "../utils";
+import { direction } from "../constants";
 export default {
   props: {
     action: Object,

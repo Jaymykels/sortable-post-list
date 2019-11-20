@@ -1,6 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
 import Post from './Post.vue'
-import { direction } from '../utils'
+import { direction } from '../constants'
 
 describe('Post.vue', () => {
     const move = jest.fn()

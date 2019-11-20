@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { direction } from "../utils";
+import { direction } from "../constants";
 export default {
   props: {
     directions: Array,

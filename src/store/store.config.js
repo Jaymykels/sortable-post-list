@@ -1,4 +1,4 @@
-import { direction, action_types } from '../utils'
+import { direction, action_types } from '../constants'
 
 export const mutation_types = {
     ...direction,
@@ -64,7 +64,7 @@ export default function storeConfig() {
                             resolve("Fetched posts successfully")
                         })
                         .catch(() => {
-                            reject('An error occured trying to load posts')
+                            reject('An error occurred trying to load posts')
                         });
                 });
             }

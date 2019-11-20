@@ -1,6 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
 import Action from './Action.vue'
-import { direction } from '../utils'
+import { direction } from '../constants'
 
 describe('Action.vue', () => {
     const timeTravel = jest.fn()

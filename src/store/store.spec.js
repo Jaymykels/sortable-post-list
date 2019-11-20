@@ -1,12 +1,17 @@
 import storeConfig, { mutation_types } from './store.config'
 import Vuex from 'vuex'
 import { createLocalVue } from '@vue/test-utils'
-import { direction, action_types } from '../utils'
+import { direction, action_types } from '../constants'
 import flushPromises from 'flush-promises'
 
 const localVue = createLocalVue()
 localVue.use(Vuex)
 const { mutations } = storeConfig()
+const actions = [
+    { id: 2, direction: direction.UP, index: 2, post: 'Post 4' },
+    { id: 1, direction: direction.UP, index: 3, post: 'Post 4' },
+    { id: 0, direction: direction.UP, index: 4, post: 'Post 4' },
+]
 
 describe('Store', () => {
     test('should swap post', () => {
@@ -23,11 +28,7 @@ describe('Store', () => {
 
     test('should add action', () => {
         const state = {
-            actions: [
-                { id: 0, direction: direction.UP, index: 4, post: 'Post 4' },
-                { id: 1, direction: direction.UP, index: 3, post: 'Post 4' },
-                { id: 2, direction: direction.UP, index: 2, post: 'Post 4' },
-            ]
+            actions
         }
         mutations[mutation_types.ADD_ACTION](state, { direction: direction.UP, index: 1, post: 'Post 4' })
         expect(state.actions[0].index).toBe(1)
@@ -35,11 +36,7 @@ describe('Store', () => {
 
     test('should remove action', () => {
         const state = {
-            actions: [
-                { id: 2, direction: direction.UP, index: 2, post: 'Post 4' },
-                { id: 1, direction: direction.UP, index: 3, post: 'Post 4' },
-                { id: 0, direction: direction.UP, index: 4, post: 'Post 4' },
-            ]
+            actions
         }
         mutations[mutation_types.REMOVE_ACTION](state)
         expect(state.actions[0].index).toBe(3)
