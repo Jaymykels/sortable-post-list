@@ -1,9 +1,9 @@
 <template>
-  <div class="bg-white h-20 rounded p-3 shadow border flex justify-between">
-    <div class="sm:my-3 my-1 sm:text-base text-sm">{{ message }}</div>
+  <div class="bg-white rounded p-3 shadow border flex flex-wrap">
+    <div class="sm:my-3 my-1 sm:text-base text-sm w-3/4">{{ message }}</div>
     <button
       @click="timeTravel(action)"
-      class="h-12 m-1 bg-green-300 rounded text-sm shadow sm:text-base w-32 hover:text-white"
+      class="h-12 m-1 bg-green-300 rounded text-sm shadow sm:text-base w-1/5 hover:text-white"
     >Time travel</button>
   </div>
 </template>

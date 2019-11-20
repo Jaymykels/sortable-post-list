@@ -1,51 +1,72 @@
-import { direction } from '../utils'
+import { direction, action_types } from '../utils'
 
-export const mutationTypes = {
+export const mutation_types = {
     ...direction,
     ADD_ACTION: 'ADD_ACTION',
-    REMOVE_ACTION: 'REMOVE_ACTION'
+    REMOVE_ACTION: 'REMOVE_ACTION',
+    LOAD_POSTS: 'LOAD_POSTS'
 }
+
+const POST_URL = 'https://jsonplaceholder.typicode.com/posts'
 
 const sortDescending = arr => arr.sort((a, b) => a.id > b.id ? -1 : (a.id < b.id ? 1 : 0))
 
 export default function storeConfig() {
     return {
         state: {
-            posts: [...Array.from({ length: 5 }, (_, key) => `Post ${key+1}`)],
+            posts: [],
             actions: []
         },
         mutations: {
-            [mutationTypes.UP](state, index) {
+            [mutation_types.UP](state, index) {
                 var temp = state.posts[index]
                 state.posts[index] = state.posts[index - 1]
                 state.posts[index - 1] = temp
             },
-            [mutationTypes.DOWN](state, index) {
+            [mutation_types.DOWN](state, index) {
                 var temp = state.posts[index]
                 state.posts[index] = state.posts[index + 1]
                 state.posts[index + 1] = temp
             },
-            [mutationTypes.ADD_ACTION](state, payload) {
+            [mutation_types.ADD_ACTION](state, payload) {
                 var actions = [...state.actions]
                 actions.push({ ...payload, id: state.actions.length })
                 state.actions = sortDescending(actions)
             },
-            [mutationTypes.REMOVE_ACTION](state) {
+            [mutation_types.REMOVE_ACTION](state) {
                 var actions = [...state.actions]
                 actions.shift()
                 state.actions = sortDescending(actions)
+            },
+            [mutation_types.LOAD_POSTS](state, posts) {
+                state.posts = posts
             }
         },
         actions: {
             //move post 
-            move({ commit }, payload) {
-                commit(mutationTypes.ADD_ACTION, payload)
+            [action_types.MOVE_POST]({ commit }, payload) {
+                commit(mutation_types.ADD_ACTION, payload)
                 commit(payload.direction, payload.index)
             },
             //undo an action
-            timeTravel({ commit }, payload) {
-                commit(mutationTypes.REMOVE_ACTION)
+            [action_types.TIME_TRAVEL]({ commit }, payload) {
+                commit(mutation_types.REMOVE_ACTION)
                 commit(payload.direction, payload.index)
+            },
+            //fetch posts
+            [action_types.FETCH_POSTS]({ commit }) {
+                return new Promise((resolve, reject) => {
+                    fetch(POST_URL, { headers: { Accept: "application/json" } })
+                        .then(res => res.json())
+                        .then(res => {
+                            var posts = res.slice(0, 5).map(post => post.title)
+                            commit(mutation_types.LOAD_POSTS, posts);
+                            resolve("Fetched posts successfully")
+                        })
+                        .catch(() => {
+                            reject('An error occured trying to load posts')
+                        });
+                });
             }
         }
     }

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-white shadow h-24 rounded overflow-hidden sm:mr-10 border flex justify-between p-4 sm:mb-6 mb-4"
+    class="bg-white shadow rounded overflow-hidden sm:mr-10 border flex justify-between p-4 sm:mb-6 mb-4"
   >
     <div class="w-11/12 sm:text-lg text-sm py-4">{{ text }}</div>
     <div :class="[ directions.length > 1 ? 'flex flex-col justify-between' : 'py-6']">
