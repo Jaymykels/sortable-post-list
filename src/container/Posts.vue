@@ -2,7 +2,7 @@
   <div class="flex flex-wrap sm:-mx-20">
     <div class="w-full sm:w-1/2 px-10 pb-12">
       <h5 class="mb-6 text-white text-2xl font-normal">Sortable Post List</h5>
-      <p v-if="loading" class="text-center text-gray-800">
+      <p v-if="loading" class="text-center text-gray-700">
         <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" class="mx-auto" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
           width="40px" height="40px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve">
           <path opacity="0.2" fill="#000" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
@@ -22,23 +22,25 @@
           Loading posts...
       </p>
       <p v-if="errorMsg" class="text-red-400 text-xl">{{ errorMsg }}</p>
-      <div v-for="(post, index) in posts" :key="index">
-        <Post :index="index" :text="post" :move="move" :directions="getDirections(index)" />
-      </div>
+        <transition-group name="list">
+          <Post v-for="(post, index) in posts" :key="post" :index="index" :text="post" :move="move" :directions="getDirections(index)" />
+        </transition-group>
     </div>
     <div class="w-full sm:w-1/2 px-10">
       <div class="bg-gray-200 shadow border-solid rounded overflow-hidden border-b">
         <div
-          class="bg-gray-100 px-4 py-4 text-xl border-solid border-gray-100 border"
+          class="bg-gray-100 px-4 py-4 text-xl border-solid border-gray-100 border text-gray-700"
         >List of actions commited</div>
         <div class="m-3 sm:m-6">
-          <Action
-            v-for="(action, index) in actions"
-            :action="action"
-            :timeTravel="timeTravel"
-            :key="index"
-          />
-          <p v-if="actions.length < 1">No action taken</p>
+          <transition-group name="list">
+            <Action
+              v-for="action in actions"
+              :action="action"
+              :timeTravel="timeTravel"
+              :key="action.id"
+            />
+          </transition-group>
+          <p v-if="actions.length < 1" class="text-gray-700">No action taken</p>
         </div>
       </div>
     </div>
@@ -82,9 +84,11 @@ export default {
     },
 
     timeTravel(action) {
-      while (this.actions.length > 0 && this.actions[0].id >= action.id) {
-        this.$store.dispatch(action_types.TIME_TRAVEL, this.actions[0]);
-      }
+      this.$store.dispatch(action_types.TIME_TRAVEL, this.actions[0]);
+      setTimeout(() => {
+        if(this.actions.length > 0 && this.actions[0].id >= action.id)
+          this.timeTravel(action)
+      }, 1000);
     },
 
     getDirections(index) {

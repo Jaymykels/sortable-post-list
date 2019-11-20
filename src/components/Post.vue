@@ -2,7 +2,7 @@
   <div
     class="bg-white shadow rounded overflow-hidden sm:mr-10 border flex justify-between p-4 sm:mb-6 mb-4"
   >
-    <div class="w-11/12 sm:text-lg text-sm py-4">{{ text }}</div>
+    <div class="w-11/12 sm:text-lg text-sm py-4 text-gray-700">{{ text }}</div>
     <div :class="[ directions.length > 1 ? 'flex flex-col justify-between' : 'py-6']">
       <div v-for="item in directions" :key="item">
         <svg
