@@ -23,6 +23,7 @@ describe('Posts.vue', () => {
     });
 
     test('should load posts and actions', async () => {
+        //mocing a successful response using fetch
         const mockSuccessResponse = new Array(10).fill().map((_, i) => {
             return { title: `Posts ${i + 1}` }
         })
@@ -39,6 +40,7 @@ describe('Posts.vue', () => {
 
         expect(wrapper.text()).toContain('Loading posts...')
 
+        //complete all pending promises
         await flushPromises()
         //shows posts
         expect(wrapper.findAll(Post).length).toBe(5)
@@ -53,6 +55,7 @@ describe('Posts.vue', () => {
 
         //removes actions when time travel
         wrapper.find('#button-0').trigger('click')
+        //speed up the set timeout
         jest.runAllTimers()
         expect(wrapper.text()).toContain('No action taken')
     });
@@ -66,6 +69,7 @@ describe('Posts.vue', () => {
             localVue
         })
 
+        //await all pending promises
         await flushPromises()
 
         expect(wrapper.text()).toContain('An error occurred trying to load posts')

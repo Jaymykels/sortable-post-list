@@ -1,4 +1,5 @@
-# temper
+# Sortable Post List
+A Vue.js app using Tailwindcss, Purgecss and Vuex while practicing TDD and clean code.
 
 ## Project setup
 ```
